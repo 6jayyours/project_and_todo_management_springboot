@@ -34,4 +34,17 @@ You can run the application using the following command:
 mvn spring-boot:run
 ```
 
+## Access the Application
+Open your browser and navigate to:
+http://localhost:8080
+
+## Testing the Application
+To run the tests included in the project, use the following command:
+```bash
+mvn test
+```
+
+
+
+
 
