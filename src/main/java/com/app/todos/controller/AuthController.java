@@ -5,13 +5,18 @@ import com.app.todos.request.AuthenticationRequest;
 import com.app.todos.request.RegisterRequest;
 import com.app.todos.response.AuthenticationResponse;
 import com.app.todos.response.RegisterResponse;
+import com.app.todos.response.Response;
 import com.app.todos.service.UserService;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("api/v1/auth")
-@CrossOrigin(origins = "http://localhost:5173")
+@CrossOrigin(origins = "*")
 public class AuthController {
 
     private final UserService userService;
@@ -22,14 +27,24 @@ public class AuthController {
 
     @PostMapping("/register")
     public ResponseEntity<RegisterResponse> register(@RequestBody RegisterRequest request) {
-        System.out.println(request.getUsername());
-        System.out.println(request.getPassword());
         return userService.registerUser(request);
     }
 
     @PostMapping("/login")
-    public ResponseEntity<AuthenticationResponse> login(@RequestBody AuthenticationRequest request) {
-        return userService.authenticateUser(request);
+    public ResponseEntity<AuthenticationResponse> login(@RequestBody AuthenticationRequest request, HttpServletResponse response) {
+        return userService.authenticateUser(request,response);
+    }
+
+    @PostMapping("/logout")
+    public ResponseEntity<Response> logout(HttpServletRequest request) {
+        // Invalidate the current session
+        HttpSession session = request.getSession(false); // Don't create a new session
+        if (session != null) {
+            session.invalidate(); // Invalidate the session
+        }
+
+        SecurityContextHolder.clearContext(); // Clear the security context
+        return ResponseEntity.ok(new Response("Logged out successfully"));
     }
 
 

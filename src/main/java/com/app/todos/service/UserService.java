@@ -8,9 +8,11 @@ import com.app.todos.request.AuthenticationRequest;
 import com.app.todos.request.RegisterRequest;
 import com.app.todos.response.AuthenticationResponse;
 import com.app.todos.response.RegisterResponse;
+import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -56,7 +58,7 @@ public class UserService  {
         }
     }
 
-    public ResponseEntity<AuthenticationResponse> authenticateUser(AuthenticationRequest request) {
+    public ResponseEntity<AuthenticationResponse> authenticateUser(AuthenticationRequest request, HttpServletResponse response) {
         try {
             authenticationManager.authenticate(
                     new UsernamePasswordAuthenticationToken(

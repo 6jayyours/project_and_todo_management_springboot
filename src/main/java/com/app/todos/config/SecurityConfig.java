@@ -28,14 +28,15 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
-                .csrf(csrf -> csrf.disable()) // Disable CSRF for simplicity; consider your use case
+                .csrf(csrf -> csrf.disable()) // Disable CSRF protection (if you are not using CSRF tokens)
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/api/v1/auth/register", "/api/v1/auth/login").permitAll() // Allow public access
-                        .anyRequest().authenticated())
-                .userDetailsService(userService)// Protect other endpoints
-                .httpBasic(Customizer.withDefaults()) // Enable basic authentication
+                        .requestMatchers("/api/v1/auth/register", "/api/v1/auth/login").permitAll() // Allow public access to login and registration
+                        .anyRequest().authenticated()) // Any other request requires authentication
+                .userDetailsService(userService)
+                .formLogin(Customizer.withDefaults()) // Enable form login
+                .httpBasic(Customizer.withDefaults()) // Enable Basic Authentication
                 .sessionManagement(session -> session
-                        .sessionCreationPolicy(SessionCreationPolicy.STATELESS)) // Stateless sessions
+                        .sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED)) // Allow session to be created if required
                 .exceptionHandling(exception -> exception
                         .authenticationEntryPoint((request, response, authException) -> {
                             response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "Unauthorized");
