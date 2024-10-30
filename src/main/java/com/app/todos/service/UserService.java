@@ -58,7 +58,7 @@ public class UserService  {
         }
     }
 
-    public ResponseEntity<AuthenticationResponse> authenticateUser(AuthenticationRequest request, HttpServletResponse response) {
+    public ResponseEntity<AuthenticationResponse> authenticateUser(AuthenticationRequest request) {
         try {
             authenticationManager.authenticate(
                     new UsernamePasswordAuthenticationToken(

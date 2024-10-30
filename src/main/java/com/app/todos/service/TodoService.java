@@ -69,11 +69,11 @@ public class TodoService {
         }
     }
 
-    public ResponseEntity<Response> updateTodoStatus(Long id, boolean status) {
+    public ResponseEntity<Response> updateTodoStatus(Long id) {
         try {
             Todo todo = todoRepository.findById(id)
                     .orElseThrow(() -> new TodoNotFoundException("Todo not found with ID: " + id));
-            todo.setStatus(status);
+            todo.setStatus(!todo.isStatus());
             todo.setUpdatedDate(LocalDate.now());
             todoRepository.save(todo);
             return ResponseEntity.ok(new Response("Todo status updated successfully"));

@@ -74,4 +74,13 @@ public class ProjectService {
             throw new RuntimeException("An unexpected error occurred while fetching projects: " + ex.getMessage());
         }
     }
+
+    public ResponseEntity<Project> getProject(Long id) {
+        try {
+            Project project = projectRepository.findById(id).orElseThrow(() -> new ProjectNotFoundException("Project not found with i d: " + id));
+            return ResponseEntity.ok(project);
+        } catch (Exception ex) {
+            throw new RuntimeException("An unexpected error occurred while fetching projects: " + ex.getMessage());
+        }
+    }
 }

@@ -12,6 +12,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("api/v1/project")
+@CrossOrigin(origins = "http://localhost:5173")
 public class ProjectController {
     private final ProjectService projectService;
 
@@ -32,5 +33,10 @@ public class ProjectController {
     @GetMapping("/{id}")
     public ResponseEntity<List<Project>> getAll(@PathVariable Long id) {
         return projectService.getAllProjects(id);
+    }
+
+    @GetMapping("project/{id}")
+    public ResponseEntity<Project> getProject(@PathVariable Long id) {
+        return projectService.getProject(id);
     }
 }

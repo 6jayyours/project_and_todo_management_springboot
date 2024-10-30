@@ -12,6 +12,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("api/v1/todo")
+@CrossOrigin(origins = "http://localhost:5173")
 public class TodoController {
     private final TodoService todoService;
 
@@ -34,9 +35,9 @@ public class TodoController {
         return todoService.deleteTodo(id);
     }
 
-    @PatchMapping("/status/{id}")
-    public ResponseEntity<Response> updateStatus(@PathVariable Long id, @RequestParam boolean status) {
-        return todoService.updateTodoStatus(id,status);
+    @PutMapping("/status/{id}")
+    public ResponseEntity<Response> updateStatus(@PathVariable Long id) {
+        return todoService.updateTodoStatus(id);
     }
 
     @GetMapping("/{id}")
@@ -44,8 +45,4 @@ public class TodoController {
         return todoService.getAllTodos(id);
     }
 
-    @GetMapping("/export")
-    public ResponseEntity<Response> exportAsGist() {
-        return todoService.exportTodoAsGist();
-    }
 }

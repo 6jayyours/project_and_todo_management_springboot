@@ -8,7 +8,6 @@ import com.app.todos.response.RegisterResponse;
 import com.app.todos.response.Response;
 import com.app.todos.service.UserService;
 import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -31,21 +30,11 @@ public class AuthController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<AuthenticationResponse> login(@RequestBody AuthenticationRequest request, HttpServletResponse response) {
-        return userService.authenticateUser(request,response);
+    public ResponseEntity<AuthenticationResponse> login(@RequestBody AuthenticationRequest request) {
+        return userService.authenticateUser(request);
     }
 
-    @PostMapping("/logout")
-    public ResponseEntity<Response> logout(HttpServletRequest request) {
-        // Invalidate the current session
-        HttpSession session = request.getSession(false); // Don't create a new session
-        if (session != null) {
-            session.invalidate(); // Invalidate the session
-        }
 
-        SecurityContextHolder.clearContext(); // Clear the security context
-        return ResponseEntity.ok(new Response("Logged out successfully"));
-    }
 
 
 }
