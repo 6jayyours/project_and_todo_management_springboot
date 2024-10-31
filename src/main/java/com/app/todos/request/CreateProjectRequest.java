@@ -9,7 +9,4 @@ import java.time.LocalDate;
 public class CreateProjectRequest {
     @NotNull
     private String title;
-
-    @NotNull
-    private LocalDate createdDate;
 }

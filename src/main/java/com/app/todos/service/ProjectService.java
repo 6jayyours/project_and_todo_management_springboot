@@ -11,6 +11,7 @@ import com.app.todos.response.Response;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @Service
@@ -31,7 +32,7 @@ public class ProjectService {
 
             Project project = new Project();
             project.setTitle(request.getTitle());
-            project.setCreatedDate(request.getCreatedDate());
+            project.setCreatedDate(LocalDate.now());
             project.setUser(user);
             projectRepository.save(project);
 
