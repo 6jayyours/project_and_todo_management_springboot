@@ -7,7 +7,6 @@ import com.app.todos.exceptions.UserNotFoundException;
 import com.app.todos.repository.ProjectRepository;
 import com.app.todos.repository.UserRepository;
 import com.app.todos.request.CreateProjectRequest;
-import com.app.todos.response.AuthenticationResponse;
 import com.app.todos.response.Response;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;

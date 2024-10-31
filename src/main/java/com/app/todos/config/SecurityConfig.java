@@ -13,21 +13,30 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
-import org.springframework.web.cors.CorsConfiguration;
-import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
-import org.springframework.web.filter.CorsFilter;
 
+
+/**
+ * Security configuration class for configuring authentication, authorization, and CORS settings.
+ * Utilizes Spring Security to enforce secure access to API endpoints.
+ */
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig {
 
     private final UserDetailsServiceImpl userService;
 
+    /**
+     * Constructor to initialize the custom UserDetailsService.
+     */
     public SecurityConfig(UserDetailsServiceImpl userService) {
         this.userService = userService;
     }
 
 
+    /**
+     * Configures the security filter chain, defining which endpoints are publicly accessible and
+     * which require authentication, along with session management and exception handling.
+     */
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
@@ -50,11 +59,18 @@ public class SecurityConfig {
         return http.build();
     }
 
+
+    /**
+     * Provides a PasswordEncoder bean for encoding passwords securely using BCrypt.
+     */
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder(); // Password encoder for hashing passwords
     }
 
+    /**
+     * Configures and provides an AuthenticationManager bean, required for authenticating users.
+     */
     @Bean
     public AuthenticationManager authenticationManager(AuthenticationConfiguration config) throws Exception {
         return config.getAuthenticationManager();
