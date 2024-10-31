@@ -39,7 +39,7 @@ Open your browser and navigate to:
 http://localhost:8080
 
 ## Project Repository
-- [React Frontend Repository](https://github.com/your-username/todos_react.git)
+- [React Frontend Repository](https://github.com/6jayyours/project_and_todo_management_react)
 
 
 
